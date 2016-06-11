@@ -1,0 +1,62 @@
+
+<ion-side-menus ng-init="init()">
+    <ion-side-menu side="left">
+
+        <ion-content class="sidebarContainer">
+            <ion-list>
+                <ion-item class="logduser item-divider"  >
+                    <div class="backgroundAvathar" cache-src="{{backgroundImageURL}}" src-is="background">
+                        <img class="loginphoto" ng-src="{{$root.profile.picture.replace('sz=50','sz=128')}}"   alt=""/>
+                        <label>{{$root.profile.given_name}} {{$root.profile.family_name}}</label>
+                    </div>
+                </ion-item>
+                <ion-item class="menpoint" ng-show="$root.FilterMenue==''" ng-click="openMen('app/dashboard','Dashboard')" >
+                    <i class="fa fa-tachometer menicon"></i>
+                    {{'Dashboard'}}
+                </ion-item>
+                <ion-item class="menpoint"  ng-click="$root.FilterMenue=''" ng-show="$root.FilterMenue!=''" >
+                    <i class="fa fa-chevron-left menicon"></i>
+                    {{'Zurück'}}
+                </ion-item>
+
+                <ion-item class="menpointnrp"  ng-click="setMenItem(men.submenue.length,men.itemname,men.applink)"  ng-repeat="men in $root.dbuser.menues | filterMenue:FilterMenue">
+                    <i class="fa {{men.icon}} menicon"></i>
+                    {{men.title}}
+
+                    <i ng-show="men.submenue.length != 0" class="fa fa-chevron-right menr"></i>
+                </ion-item>
+
+                <ion-item class="menpoint" ng-show="$root.FilterMenue==''" href="#/login">
+                    <i class="fa fa-sign-out menicon"></i>
+                    {{'Abmelden'}}
+                </ion-item>
+
+                <div class="bar bar-footer bar-balanced UserOnline" ng-click="openUserOnline()">
+                    <div class="title">{{'Benutzer Online'}}: <i class="ion-android-contact"></i> {{size($root.UserOnline)}}</div>
+                </div>
+
+
+
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+
+
+<ion-side-menu-content>
+    <ion-header-bar class="bar-positive">
+        <button ng-click="toggleLeft()" class="button button-icon ion-navicon flat"></button>
+        <h1 class="title fab-left">{{$root.appTitle}}</h1>
+
+        <button ng-click="toggleRight()" class="button button-icon ion-settings flat"></button>
+    </ion-header-bar>
+
+    <ion-nav-view ng-show="$root.subloader == true" animation="slide-left-right">
+        <ion-view >
+            <ion-content >
+                <ion-spinner icon="ios" class="spinner-energized appspinner"></ion-spinner>
+            </ion-content>
+        </ion-view>
+    </ion-nav-view>
+    <ion-nav-view ng-hide="$root.subloader != true" name="menuecontent" animation="slide-left-right"></ion-nav-view>
+    <!-- Main content, usually <ion-nav-view> -->
+</ion-side-menu-content>
